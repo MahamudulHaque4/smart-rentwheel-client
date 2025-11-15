@@ -6,6 +6,10 @@ import MainLayouts from './Layouts/MainLayouts.jsx'
 import Home from './components/Home/Home.jsx'
 import cars from './components/Cars/cars.jsx'
 import AuthProvider from './contexts/AuthProvider.jsx'
+import Register from './components/Register/Register.jsx'
+import Login from './components/Login/Login.jsx'
+import MyBookings from './components/MyBookings/MyBookings.jsx'
+import MyListings from './components/MyListings/MyListings.jsx'
 
 const router = createBrowserRouter([
   {
@@ -18,6 +22,22 @@ const router = createBrowserRouter([
     {
       path: '/cars',
       Component: cars
+    },
+    {
+      path: '/register',
+      Component : Register
+    },
+    {
+      path: '/login',
+      Component : Login
+    },
+    {
+      path : '/myBooking',
+      element : <MyBookings></MyBookings>
+    },
+    {
+      path : '/myListing',
+      element : <MyListings></MyListings>
     }
   ]
   },

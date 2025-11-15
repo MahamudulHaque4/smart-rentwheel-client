@@ -1,62 +1,32 @@
 import React, { use } from 'react'
-import { NavLink } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext';
 
-const Register = () => {
+const Login = () => {
     const{signInWithGoogle}= use(AuthContext);
-
-    const handleGoogleSignIn = () => {
-        signInWithGoogle().then(result => {
-            console.log(result.user);
-            const newUSer ={
-                name : result.user.displayName,
-                email : result.user.email,
-                photoURL : result.user.photoURL
-            }
-
-            // Create user in data base
-            fetch('http://localhost:4000/users',{
-                method : 'POST',
-                headers : {
-                    'Content-Type' : 'application/json'
-                },
-                body : JSON.stringify(newUSer)
+    
+        const handleGoogleSignIn = () => {
+            signInWithGoogle().then(result => {
+                console.log(result.user);
             })
-            .then (res => res.json())
-            .then (data => {
-                console.log('Data after user save', data);
+            .catch(error => {
+                console.log(error);
             })
-        })
-        .catch(error => {
-            console.log(error);
-        })
-    }
+        }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
 
-      <div className="w-full max-w-md bg-white rounded-xl shadow-md p-8 border border-gray-100 
+      <div className="w-full max-w-md bg-white rounded-xl shadow-md p-8 border border-gray-100
                       transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
 
         <h2 className="text-2xl font-semibold text-gray-800 text-center mb-2">
-          Create an Account
+          Welcome Back
         </h2>
 
         <p className="text-center text-gray-500 text-sm mb-6">
-          Register to continue
+          Login to continue
         </p>
 
         <form className="space-y-4">
-
-          {/* Name */}
-          <div>
-            <label className="block text-gray-700 mb-1">Name</label>
-            <input
-              type="text"
-              className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-800 
-                         focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Enter your name"
-            />
-          </div>
 
           {/* Email */}
           <div>
@@ -69,17 +39,6 @@ const Register = () => {
             />
           </div>
 
-          {/* Photo URL */}
-          <div>
-            <label className="block text-gray-700 mb-1">Photo URL</label>
-            <input
-              type="text"
-              className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-800 
-                         focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Link to your photo"
-            />
-          </div>
-
           {/* Password */}
           <div>
             <label className="block text-gray-700 mb-1">Password</label>
@@ -87,15 +46,15 @@ const Register = () => {
               type="password"
               className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-800 
                          focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Create a password"
+              placeholder="Enter your password"
             />
           </div>
 
-          {/* Register Button */}
+          {/* Login Button */}
           <button
             className="w-full bg-blue-600 text-white p-3 rounded-lg font-medium hover:bg-blue-700 transition"
           >
-            Register
+            Login
           </button>
         </form>
 
@@ -108,17 +67,17 @@ const Register = () => {
 
         {/* Google Login */}
         <button
-          onClick = {handleGoogleSignIn}
+        onClick ={handleGoogleSignIn}
           className="w-full border border-gray-300 p-3 rounded-lg flex items-center justify-center gap-2 bg-white hover:bg-gray-50 transition"
         >
           <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-5 h-5" />
           Continue with Google
         </button>
 
-        {/* Login Link */}
+        {/* Register Link */}
         <p className="mt-5 text-center text-gray-600 text-sm">
-          Already have an account?{" "}
-          <NavLink to="/login" className="text-blue-600 hover:underline">Login</NavLink>
+          Don’t have an account?{" "}
+          <a href="/register" className="text-blue-600 hover:underline">Register</a>
         </p>
 
       </div>
@@ -126,4 +85,4 @@ const Register = () => {
   );
 };
 
-export default Register
+export default Login
