@@ -13,6 +13,7 @@ import MyListings from './components/MyListings/MyListings.jsx'
 import CarDetails from './components/CarDetails/CarDetails.jsx'
 import Errorpage from './Pages/Errorpage.jsx'
 import AboutUs from './Pages/AboutUs.jsx'
+import AddCar from './components/AddCar/AddCar.jsx'
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,8 @@ const router = createBrowserRouter([
     },
     {
       path: '/cars',
-      Component: cars
+      Component: cars,
+      loader : () => fetch("http://localhost:4000/cars").then(res => res.json())
     },
     {
       path: '/register',
@@ -78,13 +80,14 @@ const router = createBrowserRouter([
   {
     path: '/aboutus',
     Component : AboutUs
-  }
-  ]
   },
-  // {
-  //   path : '*',
-  //   element : <Errorpage></Errorpage>
-  // },
+  {
+    path : '/addcar',
+    Component : AddCar
+  
+  },
+  
+]}
 ])
 
 createRoot(document.getElementById('root')).render(

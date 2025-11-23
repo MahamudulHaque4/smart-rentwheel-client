@@ -13,13 +13,15 @@ const Navbar = () => {
 
     const links = <>    
        <li><NavLink to="/">Home</NavLink></li>
-       <li><NavLink to="/cars">Cars</NavLink></li>
        {
         user && <>
+        <li><NavLink to="/addcar">Add Car</NavLink></li>
         <li><NavLink to="/myBooking">My Booking</NavLink></li>
         <li><NavLink to="/myListing">My Listing</NavLink></li>
+        
         </>
        }
+       <li><NavLink to="/cars">Browse Cars</NavLink></li>
 
        {/* <li>
           <a>Parent</a>

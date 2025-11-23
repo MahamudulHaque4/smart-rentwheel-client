@@ -47,7 +47,7 @@ const CarDetails = () => {
       buyerEmail: email,
       carName: carNameFromForm,
       rentPrice: price,
-      status: "Pending",
+      status: "pending",
     };
 
     fetch("http://localhost:4000/bookings", {
@@ -293,7 +293,7 @@ const CarDetails = () => {
                 </form>
               </dialog>
 
-              <NavLink to="/" className="btn btn-outline w-full rounded-full">
+              <NavLink to="cars" className="btn btn-outline w-full rounded-full">
                 Back to Cars
               </NavLink>
             </div>
