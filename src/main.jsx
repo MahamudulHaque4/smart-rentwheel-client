@@ -10,11 +10,13 @@ import Register from './components/Register/Register.jsx'
 import Login from './components/Login/Login.jsx'
 import MyBookings from './components/MyBookings/MyBookings.jsx'
 import MyListings from './components/MyListings/MyListings.jsx'
+import CarDetails from './components/CarDetails/CarDetails.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
     Component: MainLayouts,
+    HydrateFallback: () => <div>Loading...</div>,
     children: [{
       index: true,
       Component: Home
@@ -38,7 +40,34 @@ const router = createBrowserRouter([
     {
       path : '/myListing',
       element : <MyListings></MyListings>
+    },
+    {
+     path: 'carDetails/:id',
+      loader: async ({ params }) => {
+      try {
+        console.log(' Loading car with ID:', params.id);
+      
+        const response = await fetch(`http://localhost:4000/cars/${params.id}`);
+        console.log(' Response status:', response.status);
+      
+       if (!response.ok) {
+        const errorText = await response.text();
+        console.log(' Server error:', errorText);
+        throw new Error(`Car not found: ${response.status}`);
+      }
+      
+      const carData = await response.json();
+      console.log(' Loaded car:', carData.carName);
+      
+      return carData;
+      
+    } catch (error) {
+      console.error(' Loader error:', error);
+      throw error;
     }
+   },
+   Component: CarDetails
+  }
   ]
   },
 ])
