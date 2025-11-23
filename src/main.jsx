@@ -11,15 +11,22 @@ import Login from './components/Login/Login.jsx'
 import MyBookings from './components/MyBookings/MyBookings.jsx'
 import MyListings from './components/MyListings/MyListings.jsx'
 import CarDetails from './components/CarDetails/CarDetails.jsx'
+import Errorpage from './Pages/Errorpage.jsx'
+import AboutUs from './Pages/AboutUs.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
     Component: MainLayouts,
+    errorElement: <Errorpage></Errorpage>,
     HydrateFallback: () => <div>Loading...</div>,
     children: [{
       index: true,
       Component: Home
+    },
+    {
+      path : '/home',
+      Component : Home
     },
     {
       path: '/cars',
@@ -67,9 +74,17 @@ const router = createBrowserRouter([
     }
    },
    Component: CarDetails
+  },
+  {
+    path: '/aboutus',
+    Component : AboutUs
   }
   ]
   },
+  // {
+  //   path : '*',
+  //   element : <Errorpage></Errorpage>
+  // },
 ])
 
 createRoot(document.getElementById('root')).render(
