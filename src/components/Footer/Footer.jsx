@@ -27,10 +27,10 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2">
                 <div className="w-9 h-9 rounded-2xl bg-primary/15 grid place-items-center font-bold text-primary">
-                  A
+                  <img src="https://img.icons8.com/?size=100&id=10697&format=png" alt="" />
                 </div>
                 <h2 className="text-xl font-bold tracking-tight">
-                  ACME Rentals
+                  Rent <span className='text-purple-600'>Wheel</span>
                 </h2>
               </div>
 

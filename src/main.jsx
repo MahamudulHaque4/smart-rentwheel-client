@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import MainLayouts from './Layouts/MainLayouts.jsx'
 import Home from './components/Home/Home.jsx'
 import cars from './components/Cars/cars.jsx'
@@ -14,13 +14,17 @@ import CarDetails from './components/CarDetails/CarDetails.jsx'
 import Errorpage from './Pages/Errorpage.jsx'
 import AboutUs from './Pages/AboutUs.jsx'
 import AddCar from './components/AddCar/AddCar.jsx'
+import LoadingSpinner from './components/LoaderSpinner/LoaderSpinner.jsx'
+import Profile from './components/Profile/Profile.jsx'
+import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx'
+import { Toaster } from 'react-hot-toast'
 
 const router = createBrowserRouter([
   {
     path: '/',
     Component: MainLayouts,
     errorElement: <Errorpage></Errorpage>,
-    HydrateFallback: () => <div>Loading...</div>,
+    HydrateFallback: () => <LoadingSpinner />,
     children: [{
       index: true,
       Component: Home
@@ -44,11 +48,11 @@ const router = createBrowserRouter([
     },
     {
       path : '/myBooking',
-      element : <MyBookings></MyBookings>
+      element : (<PrivateRoute><MyBookings /></PrivateRoute>)
     },
     {
       path : '/myListing',
-      element : <MyListings></MyListings>
+      element : (<PrivateRoute><MyListings /></PrivateRoute>)
     },
     {
      path: 'carDetails/:id',
@@ -83,9 +87,23 @@ const router = createBrowserRouter([
   },
   {
     path : '/addcar',
-    Component : AddCar
+    element : (<PrivateRoute><AddCar /></PrivateRoute>
+  )
   
   },
+  {
+    path : '/profile',
+    element : (
+    <PrivateRoute><Profile /></PrivateRoute>
+  )},
+  // {
+  //   path : "/forgatepassword",
+  //   element : ( 
+  //   <PrivateRoute>
+  //     <ForgatePassword />
+  //   </PrivateRoute>
+  // )
+  // }
   
 ]}
 ])
@@ -93,6 +111,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
+      <Toaster position = "top-center" />
       <RouterProvider router={router} />
     </AuthProvider>
   </StrictMode>,

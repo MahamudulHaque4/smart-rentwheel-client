@@ -11,7 +11,7 @@ import {
 import { AuthContext } from "../../contexts/AuthContext";
 
 const CarDetails = () => {
-  const car = useLoaderData(); // ✅ get full car
+  const car = useLoaderData(); 
   const {
     _id: carId,
     carName,
@@ -67,6 +67,7 @@ const CarDetails = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-base-200 via-base-200 to-base-100 py-10 px-4">
+      <title>{carName} - Car Details</title>
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-6">
         {/* LEFT */}
         <div className="lg:col-span-3 card bg-base-100 shadow-xl rounded-3xl overflow-hidden border border-base-200">
