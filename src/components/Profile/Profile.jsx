@@ -3,7 +3,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const { user, signOutUser } = useContext(AuthContext); // ✅ get signOutUser too
+  const { user, signOutUser } = useContext(AuthContext); 
   const navigate = useNavigate();
 
   const [profile, setProfile] = useState({
@@ -71,12 +71,12 @@ const Profile = () => {
 
   const handleSignOut = async () => {
     try {
-      await signOutUser();               // ✅ call context function
+      await signOutUser();               
       localStorage.removeItem("username");
       localStorage.removeItem("email");
       // optional: localStorage.removeItem("photoURL");
 
-      navigate("/login", { replace: true });  // ✅ redirect after logout
+      navigate("/login", { replace: true });  
     } catch (err) {
       console.error("Error signing out:", err);
     }
@@ -151,7 +151,7 @@ const Profile = () => {
             Profile Details
           </h3>
 
-          {/* ✅ Wrap buttons together so gap is small */}
+         
           <div className="flex items-center gap-3">
             <button
               onClick={handleEditToggle}

@@ -21,7 +21,7 @@ const AddCar = () => {
       image: form.image.value,
       providerName: user?.displayName || "Unknown",
       providerEmail: user?.email || "Unknown",
-      // status: "Available",
+      status: "Available",
       createdAt: new Date().toISOString().split("T")[0],
     };
 
@@ -45,7 +45,7 @@ const AddCar = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-base-200 via-base-200 to-base-100 py-10 px-4">
       
-      {/* Toaster */}
+      
       <Toaster position="top-center" />
 
       <div className="max-w-3xl mx-auto card bg-base-100 shadow-xl rounded-3xl border border-base-200 overflow-hidden">

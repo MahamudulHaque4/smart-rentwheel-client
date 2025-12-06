@@ -1,5 +1,5 @@
-import React, { useContext, useRef } from "react";
-import { NavLink, useLoaderData } from "react-router";
+import React, { useContext, useRef, useEffect, useState } from "react";
+import { NavLink, useLoaderData, useNavigate } from "react-router-dom";
 import {
   MapPin,
   CarFront,
@@ -9,9 +9,14 @@ import {
   User,
 } from "lucide-react";
 import { AuthContext } from "../../contexts/AuthContext";
+import toast from "react-hot-toast";
 
 const CarDetails = () => {
-  const car = useLoaderData(); 
+  const car = useLoaderData();
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const bookModalRef = useRef(null);
+
   const {
     _id: carId,
     carName,
@@ -25,49 +30,99 @@ const CarDetails = () => {
     providerEmail,
   } = car || {};
 
-  const bookModalRef = useRef(null);
-  const { user } = useContext(AuthContext); // ✅ correct hook
+  // 🔥 keep live status in state so UI updates after booking
+  const [currentStatus, setCurrentStatus] = useState(status || "Available");
+
+  useEffect(() => {
+    if (car?.status) {
+      setCurrentStatus(car.status);
+    }
+  }, [car]);
+
+  const isAvailable = currentStatus === "Available";
 
   const handlebookModalOpen = () => {
+    if (!isAvailable) return;
     bookModalRef.current?.showModal();
   };
 
-  const handlebookSubmit = (event) => {
+  const handlebookSubmit = async (event) => {
     event.preventDefault();
 
     const name = event.target.name.value;
     const email = event.target.email.value;
     const carNameFromForm = event.target.car.value;
     const price = event.target.price.value;
+    const bookingDate = event.target.bookingDate.value;
 
     const newBooking = {
-      // ✅ now inside submit (scope ok)
       bookingId: carId,
       buyerName: name,
       buyerEmail: email,
       carName: carNameFromForm,
       rentPrice: price,
-      status: "pending",
+      bookingDate,
+      status: "Booked",
+      createdAt: new Date().toISOString(),
     };
 
-    fetch("http://localhost:4000/bookings", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(newBooking),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("After booking data", data);
-        bookModalRef.current?.close(); // optional close after success
-      })
-      .catch((err) => console.error(err));
+    try {
+      // 1️⃣ Save booking
+      const res = await fetch("http://localhost:4000/bookings", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(newBooking),
+      });
+
+      const data = await res.json();
+      console.log("After booking data", data);
+
+      if (!res.ok) {
+        throw new Error(data?.error || "Booking failed");
+      }
+
+      // 2️⃣ Update car status in DB to "Booked"
+      const statusRes = await fetch(
+        `http://localhost:4000/cars/${carId}`,
+        {
+          method: "PATCH",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ status: "Booked" }),
+        }
+      );
+
+      const statusData = await statusRes.json();
+      console.log("Car status update:", statusData);
+
+      if (!statusRes.ok) {
+        throw new Error(statusData?.error || "Failed to update car status");
+      }
+
+      // 3️⃣ Update UI state
+      setCurrentStatus("Booked");
+
+      // 4️⃣ Close modal + toast + stay on same page
+      bookModalRef.current?.close();
+      toast.success("Booking confirmed! Car is now booked.");
+
+      // Optional: ensure URL is still this page (not really needed, but harmless)
+      navigate(`/carDetails/${carId}`, { replace: true });
+    } catch (err) {
+      console.error(err);
+      toast.error(err.message || "Failed to create booking");
+    }
   };
 
-  const isAvailable = status === "Available";
+  if (!car) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-base-content/60">Car details not found.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-base-200 via-base-200 to-base-100 py-10 px-4">
-      <title>{carName} - Car Details</title>
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-6">
         {/* LEFT */}
         <div className="lg:col-span-3 card bg-base-100 shadow-xl rounded-3xl overflow-hidden border border-base-200">
@@ -90,7 +145,7 @@ const CarDetails = () => {
                 className={`badge px-4 py-3 rounded-full text-xs font-semibold tracking-wide
                 ${isAvailable ? "badge-success" : "badge-warning"}`}
               >
-                {status || "Unknown"}
+                {currentStatus || "Unknown"}
               </span>
             </div>
 
@@ -142,7 +197,7 @@ const CarDetails = () => {
                 <InfoTile
                   icon={<ShieldCheck size={18} />}
                   label="Car Status"
-                  value={status}
+                  value={currentStatus}
                   valueClass={isAvailable ? "text-success" : "text-warning"}
                 />
               </div>
@@ -194,10 +249,14 @@ const CarDetails = () => {
 
               <button
                 onClick={handlebookModalOpen}
-                className="btn btn-black btn-outline w-full rounded-full text-base font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:brightness-110 active:scale-95"
-                // disabled={!isAvailable}
+                disabled={!isAvailable}
+                className={`
+                  btn btn-black btn-outline w-full rounded-full text-base font-semibold
+                  transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:brightness-110 active:scale-95
+                  ${!isAvailable ? "btn-disabled opacity-60 cursor-not-allowed" : ""}
+                `}
               >
-                Book Now
+                {isAvailable ? "Book Now" : "Already Booked"}
               </button>
 
               {/* MODAL */}
@@ -217,6 +276,7 @@ const CarDetails = () => {
 
                   <div className="p-6 md:p-7">
                     <form onSubmit={handlebookSubmit} className="space-y-4">
+                      {/* Name */}
                       <div className="form-control">
                         <label className="label pb-1">
                           <span className="label-text font-medium">Name</span>
@@ -230,6 +290,7 @@ const CarDetails = () => {
                         />
                       </div>
 
+                      {/* Email */}
                       <div className="form-control">
                         <label className="label pb-1">
                           <span className="label-text font-medium">Email</span>
@@ -243,6 +304,7 @@ const CarDetails = () => {
                         />
                       </div>
 
+                      {/* Car */}
                       <div className="form-control">
                         <label className="label pb-1">
                           <span className="label-text font-medium">Car</span>
@@ -256,6 +318,7 @@ const CarDetails = () => {
                         />
                       </div>
 
+                      {/* Price */}
                       <div className="form-control">
                         <label className="label pb-1">
                           <span className="label-text font-medium">Price</span>
@@ -265,6 +328,21 @@ const CarDetails = () => {
                           name="price"
                           readOnly
                           defaultValue={`${rentPrice} BDT / day`}
+                          className="input input-bordered w-full rounded-2xl bg-base-200/60"
+                        />
+                      </div>
+
+                      {/* Booking Date */}
+                      <div className="form-control">
+                        <label className="label pb-1">
+                          <span className="label-text font-medium">
+                            Select Booking Date
+                          </span>
+                        </label>
+                        <input
+                          type="date"
+                          name="bookingDate"
+                          required
                           className="input input-bordered w-full rounded-2xl bg-base-200/60"
                         />
                       </div>
@@ -294,7 +372,10 @@ const CarDetails = () => {
                 </form>
               </dialog>
 
-              <NavLink to="cars" className="btn btn-outline w-full rounded-full">
+              <NavLink
+                to="/cars"
+                className="btn btn-outline w-full rounded-full"
+              >
                 Back to Cars
               </NavLink>
             </div>

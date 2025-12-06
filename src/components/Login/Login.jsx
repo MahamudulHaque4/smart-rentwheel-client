@@ -14,7 +14,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // 🔁 If already logged in, go to profile
   if (user) {
     return <Navigate to="/profile" replace />;
   }
@@ -71,7 +70,7 @@ const Login = () => {
 
         localStorage.setItem("username", u.displayName || "");
         localStorage.setItem("email", u.email || email);
-        localStorage.setItem("photoURL", u.photoURL || ""); // 👈 same key
+        localStorage.setItem("photoURL", u.photoURL || ""); 
 
         toast.success("Login successful, welcome back!");
         navigate("/profile", { replace: true });
@@ -109,7 +108,7 @@ const Login = () => {
           {/* Header */}
           <div className="text-center space-y-2 mb-7">
             <h2 className="text-3xl font-extrabold tracking-tight">
-              Welcome Back 👋
+              Welcome Back 
             </h2>
             <p className="text-sm text-base-content/70">
               Login to continue to your account

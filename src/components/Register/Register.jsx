@@ -62,7 +62,6 @@ const Register = () => {
       return;
     }
 
-    // Main part: Create user with Firebase
     createUser(email, password)
       .then((result) => {
         const user = result.user;
@@ -95,7 +94,7 @@ const Register = () => {
               });
 
             toast.success("Registration successful!");
-            navigate("/"); // redirect after success
+            navigate("/profile"); 
           })
           .catch((error) => {
             console.error(error);
