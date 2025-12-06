@@ -1,23 +1,37 @@
+// src/components/Header/Header.jsx
 import React, { useState } from "react";
-import { Search, Sparkles, ShieldCheck, BadgeDollarSign, Headset } from "lucide-react";
+import {
+  Search,
+  Sparkles,
+  ShieldCheck,
+  BadgeDollarSign,
+  Headset,
+} from "lucide-react";
 
 const Header = ({ onSearch }) => {
   const [searchText, setSearchText] = useState("");
 
+  // avoid crash if onSearch not passed
+  const safeOnSearch = (value) => {
+    if (typeof onSearch === "function") {
+      onSearch(value);
+    }
+  };
+
   const handleChange = (e) => {
     const value = e.target.value;
     setSearchText(value);
-    onSearch(value);
+    safeOnSearch(value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(searchText);
+    safeOnSearch(searchText);
   };
 
   const quickSearch = (text) => {
     setSearchText(text);
-    onSearch(text);
+    safeOnSearch(text);
   };
 
   return (
@@ -41,8 +55,8 @@ const Header = ({ onSearch }) => {
             Find Your Perfect Ride
           </h1>
           <p className="text-sm md:text-base text-base-content/70 max-w-2xl mx-auto leading-relaxed">
-            RentWheels helps you find cars instantly by name, category, and location.
-            Book in minutes from trusted providers across Bangladesh.
+            RentWheels helps you find cars instantly by name, category, and
+            location. Book in minutes from trusted providers across Bangladesh.
           </p>
         </div>
 
@@ -90,23 +104,25 @@ const Header = ({ onSearch }) => {
 
         {/* Quick chips */}
         <div className="mt-5 flex flex-wrap justify-center gap-2">
-          {["Toyota Corolla", "Honda Civic", "SUV", "Electric", "Luxury"].map((item) => (
-            <button
-              key={item}
-              type="button"
-              onClick={() => quickSearch(item)}
-              className="
-                badge badge-outline px-4 py-2 text-xs md:text-sm rounded-full
-                hover:bg-primary hover:text-primary-content hover:border-primary
-                transition-all duration-300
-              "
-            >
-              {item}
-            </button>
-          ))}
+          {["Toyota Corolla", "Honda Civic", "SUV", "Electric", "Luxury"].map(
+            (item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => quickSearch(item)}
+                className="
+                  badge badge-outline px-4 py-2 text-xs md:text-sm rounded-full
+                  hover:bg-primary hover:text-primary-content hover:border-primary
+                  transition-all duration-300
+                "
+              >
+                {item}
+              </button>
+            )
+          )}
         </div>
 
-        {/* Informative row */}
+        {/* Info row */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
           <InfoCard
             icon={<ShieldCheck size={18} />}
