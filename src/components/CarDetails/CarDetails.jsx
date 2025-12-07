@@ -71,7 +71,7 @@ const CarDetails = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:4000/bookings", {
+      const res = await fetch("https://simple-rentwheel-server.vercel.app/bookings", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(newBooking),
@@ -84,7 +84,7 @@ const CarDetails = () => {
         throw new Error(data?.error || "Booking failed");
       }
 
-      const statusRes = await fetch(`http://localhost:4000/cars/${carId}`, {
+      const statusRes = await fetch(`https://simple-rentwheel-server.vercel.app/cars/${carId}`, {
         method: "PATCH",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ status: "Booked" }),

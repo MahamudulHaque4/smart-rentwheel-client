@@ -25,7 +25,7 @@ const AddCar = () => {
       createdAt: new Date().toISOString().split("T")[0],
     };
 
-    fetch("http://localhost:4000/cars", {
+    fetch("https://simple-rentwheel-server.vercel.app/cars", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(newCar),

@@ -16,7 +16,7 @@ const MyListings = () => {
 
     setLoading(true);
 
-    fetch(`http://localhost:4000/cars?email=${user.email}`)
+    fetch(`https://simple-rentwheel-server.vercel.app/cars?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         console.log("MyListings cars:", data);
@@ -44,7 +44,7 @@ const MyListings = () => {
 
     const id = carToDelete._id;
 
-    fetch(`http://localhost:4000/cars/${id}`, {
+    fetch(`https://simple-rentwheel-server.vercel.app/cars/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

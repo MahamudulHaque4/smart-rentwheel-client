@@ -78,7 +78,7 @@ const Register = () => {
               photoURL: photoURL || "",
             };
 
-            fetch("http://localhost:4000/users", {
+            fetch("https://simple-rentwheel-server.vercel.app/users", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -119,7 +119,7 @@ const Register = () => {
           photoURL: user.photoURL,
         };
 
-        fetch("http://localhost:4000/users", {
+        fetch("https://simple-rentwheel-server.vercel.app/users", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

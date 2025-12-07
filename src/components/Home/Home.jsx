@@ -7,7 +7,7 @@ import Whyrent from "../Whyrent/Whyrent";
 import Testimonial from "../Testimonial/Testtimonial";
 import Achievement from "../Achievment/Achivment";
 
-const topratedCarsPromise = fetch("http://localhost:4000/top-cars").then(
+const topratedCarsPromise = fetch("https://simple-rentwheel-server.vercel.app/top-cars").then(
   (res) => res.json()
 );
 

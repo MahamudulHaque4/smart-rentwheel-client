@@ -45,7 +45,7 @@ const UpdateCar = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`http://localhost:4000/cars/${car._id}`, {
+    fetch(`https://simple-rentwheel-server.vercel.app/cars/${car._id}`, {
       method: "PUT",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(formData),

@@ -39,7 +39,7 @@ const router = createBrowserRouter([
         path: '/cars',
         Component: cars,
         loader: () =>
-          fetch('http://localhost:4000/cars').then((res) => res.json()),
+          fetch('https://simple-rentwheel-server.vercel.app/cars').then((res) => res.json()),
       },
       {
         path: '/register',
@@ -72,7 +72,7 @@ const router = createBrowserRouter([
             console.log(' Loading car with ID:', params.id);
 
             const response = await fetch(
-              `http://localhost:4000/cars/${params.id}`
+              `https://simple-rentwheel-server.vercel.app/cars/${params.id}`
             );
             console.log(' Response status:', response.status);
 
@@ -107,7 +107,7 @@ const router = createBrowserRouter([
         ),
         loader: async ({ params }) => {
           const res = await fetch(
-            `http://localhost:4000/cars/${params.id}`
+            `https://simple-rentwheel-server.vercel.app/cars/${params.id}`
           );
           return res.json();
         },

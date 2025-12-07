@@ -16,7 +16,7 @@ const MyBookings = () => {
 
     setLoading(true);
 
-    fetch(`http://localhost:4000/bookings?email=${user.email}`)
+    fetch(`https://simple-rentwheel-server.vercel.app/bookings?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         console.log("MyBookings data:", data);
@@ -44,7 +44,7 @@ const MyBookings = () => {
 
     const bookingId = bookingToCancel._id;
 
-    fetch(`http://localhost:4000/bookings/${bookingId}`, {
+    fetch(`https://simple-rentwheel-server.vercel.app/bookings/${bookingId}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
