@@ -11,22 +11,27 @@ const MyListings = () => {
   const [carToDelete, setCarToDelete] = useState(null);
   const deleteModalRef = useRef(null);
 
-  useEffect(() => {
+  const loadMyCars = () => {
     if (!user?.email) return;
 
+    console.log("Loading cars for:", user.email);
     setLoading(true);
 
-    fetch(`https://simple-rentwheel-server.vercel.app/cars?email=${user.email}`)
+    fetch(
+      `https://simple-rentwheel-server.vercel.app/cars?email=${user.email}`
+    )
       .then((res) => res.json())
       .then((data) => {
-        console.log("MyListings cars:", data);
         setCars(data);
       })
       .catch((err) => {
-        console.error("Error loading listings:", err);
         toast.error("Failed to load your listings");
       })
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    loadMyCars();
   }, [user]);
 
   const openDeleteModal = (car) => {
@@ -40,27 +45,48 @@ const MyListings = () => {
   };
 
   const handleConfirmDelete = () => {
-    if (!carToDelete?._id) return;
+    if (!carToDelete?._id) {
+      console.warn("No carToDelete._id, aborting delete");
+      return;
+    }
 
     const id = carToDelete._id;
 
     fetch(`https://simple-rentwheel-server.vercel.app/cars/${id}`, {
       method: "DELETE",
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data) => {
-        if ((data.success && data.deletedCount > 0) || data.deletedCount > 0) {
+
+        if (data.deletedCount > 0) {
           toast.success("Car deleted successfully");
 
-          // remove from UI
-          setCars((prev) => prev.filter((car) => car._id !== id));
+          setCars((prev) => {
+
+            const updated = prev.filter((car) => {
+              const carId =
+                typeof car._id === "string"
+                  ? car._id
+                  : car._id?.$oid || car._id?.toString?.();
+
+              return String(carId) !== String(id);
+            });
+            return updated;
+          });
+
+          loadMyCars();
+
           closeDeleteModal();
         } else {
           toast.error("Failed to delete car");
         }
       })
       .catch((err) => {
-        console.error("Error deleting car:", err);
         toast.error("Error deleting car");
       });
   };
@@ -156,25 +182,23 @@ const MyListings = () => {
                         </span>
                       </td>
 
-                      
                       <td>
-  <div className="flex items-center gap-2 h-full py-2">
-    <NavLink
-      to={`/update-car/${car._id}`}
-      className="btn btn-ghost btn-xs rounded-full"
-    >
-      Update
-    </NavLink>
+                        <div className="flex items-center gap-2 h-full py-2">
+                          <NavLink
+                            to={`/update-car/${car._id}`}
+                            className="btn btn-ghost btn-xs rounded-full"
+                          >
+                            Update
+                          </NavLink>
 
-    <button
-      onClick={() => openDeleteModal(car)}
-      className="btn btn-error btn-xs rounded-full text-white"
-    >
-      Delete
-    </button>
-  </div>
-</td>
-
+                          <button
+                            onClick={() => openDeleteModal(car)}
+                            className="btn btn-error btn-xs rounded-full text-white"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
