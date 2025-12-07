@@ -74,7 +74,6 @@ const Profile = () => {
       await signOutUser();               
       localStorage.removeItem("username");
       localStorage.removeItem("email");
-      // optional: localStorage.removeItem("photoURL");
 
       navigate("/login", { replace: true });  
     } catch (err) {

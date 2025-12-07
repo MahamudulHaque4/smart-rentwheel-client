@@ -1,6 +1,6 @@
-// src/components/Header/Header.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Typewriter } from "react-simple-typewriter";
 import {
   Search,
   Sparkles,
@@ -22,7 +22,7 @@ const Header = () => {
     e.preventDefault();
     const query = searchText.trim();
     if (!query) return;
-    // 🔥 Go to /cars with search query in URL
+
     navigate(`/cars?search=${encodeURIComponent(query)}`);
   };
 
@@ -33,12 +33,10 @@ const Header = () => {
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-base-100 via-base-100 to-base-200">
-      {/* soft blobs */}
       <div className="absolute -top-24 -left-24 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
       <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-secondary/10 rounded-full blur-3xl" />
 
       <div className="max-w-6xl mx-auto px-4 py-10 md:py-14 relative">
-        {/* Badge */}
         <div className="flex justify-center mb-4">
           <span className="badge badge-primary badge-outline rounded-full px-4 py-3 text-xs tracking-widest inline-flex items-center gap-2">
             <Sparkles size={14} />
@@ -46,18 +44,28 @@ const Header = () => {
           </span>
         </div>
 
-        {/* Title */}
         <div className="text-center space-y-3">
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-            Find Your Perfect Ride
+            Find Your{" "}
+            <span className="text-primary">
+              <Typewriter
+                words={["Perfect Ride", "Dream Car", "Next Adventure"]}
+                loop={0}            
+                cursor
+                cursorStyle="|"
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={1500}
+              />
+            </span>
           </h1>
+
           <p className="text-sm md:text-base text-base-content/70 max-w-2xl mx-auto leading-relaxed">
             RentWheels helps you find cars instantly by name, category, and
             location. Book in minutes from trusted providers across Bangladesh.
           </p>
         </div>
 
-        {/* Search Bar */}
         <form
           onSubmit={handleSubmit}
           className="
@@ -99,7 +107,6 @@ const Header = () => {
           </button>
         </form>
 
-        {/* Quick chips */}
         <div className="mt-5 flex flex-wrap justify-center gap-2">
           {["Toyota Corolla", "Honda Civic", "SUV", "Electric", "Luxury"].map(
             (item) => (
@@ -119,7 +126,6 @@ const Header = () => {
           )}
         </div>
 
-        {/* Info row */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
           <InfoCard
             icon={<ShieldCheck size={18} />}

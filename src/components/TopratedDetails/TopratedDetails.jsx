@@ -1,10 +1,29 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.45, ease: "easeOut" },
+  },
+};
 
 const TopratedDetails = ({ topCars }) => {
   const { _id, carName, rentPrice, category, providerName, image } = topCars;
+
   return (
-    <div className="group card bg-base-100 shadow-md rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+    <motion.div
+      className="group card bg-base-100 shadow-md rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl"
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      whileHover={{ y: -6, scale: 1.02 }}
+    >
       {/* Image */}
       <figure className="relative h-52 overflow-hidden">
         <img
@@ -28,22 +47,24 @@ const TopratedDetails = ({ topCars }) => {
           {carName}
         </h2>
 
-        <div className="space-y-1 text-sm text-base-content/80">
-          <p>
-            Rent Price (per day):{" "}
-            <div className="tooltip" data-tip={`${topCars.rentPrice} BDT/day`}>
-               <p className="text-black font-bold">
-                  {topCars.rentPrice} BDT/day
-              </p>
-           </div>
+        <div className="space-y-2 text-sm text-base-content/80">
+          {/* Price section */}
+          <div className="flex items-center gap-2">
+            <span className="text-base-content/80">Rent Price (per day):</span>
+            <div className="tooltip" data-tip={`${rentPrice} BDT/day`}>
+              <span className="font-bold text-black  px-2 py-1 rounded">
+                {rentPrice} BDT/day
+              </span>
+            </div>
+          </div>
 
-          </p>
-          <p>
-            Provider:{" "}
+          {/* Provider section */}
+          <div className="flex items-center gap-2">
+            <span className="text-base-content/80">Provider:</span>
             <span className="font-semibold text-base-content">
               {providerName}
             </span>
-          </p>
+          </div>
         </div>
 
         {/* Actions */}
@@ -51,17 +72,17 @@ const TopratedDetails = ({ topCars }) => {
           <NavLink
             to={`/carDetails/${_id}`}
             className="
-          btn btn-outline btn-sm rounded-full px-5
-          transition-all duration-300
-          hover:scale-105 hover:brightness-110 hover:shadow-lg
-          active:scale-95
-        "
+              btn btn-outline btn-sm rounded-full px-5
+              transition-all duration-300
+              hover:scale-105 hover:brightness-110 hover:shadow-lg
+              active:scale-95
+            "
           >
             View Details
           </NavLink>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

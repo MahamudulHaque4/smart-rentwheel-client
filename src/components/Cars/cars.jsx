@@ -1,9 +1,22 @@
-// src/components/Cars/cars.jsx
 import React, { useMemo } from "react";
 import { useLoaderData, useSearchParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import TopratedDetails from "../TopratedDetails/TopratedDetails";
 
-const cars = () => {
+const containerVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      when: "beforeChildren",
+      staggerChildren: 0.07,
+    },
+  },
+};
+
+const Cars = () => {
   const allCars = useLoaderData() || [];
   const [searchParams] = useSearchParams();
 
@@ -30,8 +43,18 @@ const cars = () => {
   console.log("Filtered cars:", filteredCars);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
-      <div className="flex items-center justify-between mb-6">
+    <motion.div
+      className="max-w-6xl mx-auto px-4 py-10"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.div
+        className="flex items-center justify-between mb-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
         <h2 className="text-2xl font-bold">
           All Cars <span className="text-purple-600">Here</span>
         </h2>
@@ -44,21 +67,28 @@ const cars = () => {
             </span>
           )}
         </p>
-      </div>
+      </motion.div>
 
       {filteredCars.length > 0 ? (
-        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4">
+        <motion.div
+          className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4"
+          variants={containerVariants}
+        >
           {filteredCars.map((car) => (
             <TopratedDetails key={car._id} topCars={car} />
           ))}
-        </div>
+        </motion.div>
       ) : (
-        <p className="text-center text-base-content/60 py-10">
+        <motion.p
+          className="text-center text-base-content/60 py-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
           No cars found. Try a different search.
-        </p>
+        </motion.p>
       )}
-    </div>
+    </motion.div>
   );
 };
 
-export default cars;
+export default Cars;

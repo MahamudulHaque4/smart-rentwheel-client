@@ -61,11 +61,8 @@ const AddCar = () => {
         </div>
 
         <div className="card-body p-6 md:p-8 space-y-6">
-          
-          {/* Form */}
-          <form onSubmit={handleAddCar} className="space-y-4">
 
-            {/* Car Name */}
+          <form onSubmit={handleAddCar} className="space-y-4">
             <div className="form-control">
               <label className="label font-medium">Car Name</label>
               <input
@@ -77,7 +74,6 @@ const AddCar = () => {
               />
             </div>
 
-            {/* Description */}
             <div className="form-control">
               <label className="label font-medium">Description</label>
               <textarea
@@ -88,10 +84,8 @@ const AddCar = () => {
               />
             </div>
 
-            {/* Category + RentPrice */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-              {/* Category */}
               <div className="form-control">
                 <label className="label font-medium">Category</label>
                 <select
@@ -108,7 +102,6 @@ const AddCar = () => {
                 </select>
               </div>
 
-              {/* Rent Price */}
               <div className="form-control">
                 <label className="label font-medium">
                   Rent Price (per day)
@@ -126,7 +119,6 @@ const AddCar = () => {
               </div>
             </div>
 
-            {/* Location */}
             <div className="form-control">
               <label className="label font-medium">Location</label>
               <input
@@ -138,7 +130,6 @@ const AddCar = () => {
               />
             </div>
 
-            {/* Image URL */}
             <div className="form-control">
               <label className="label font-medium">Hosted Image URL</label>
               <input
@@ -153,9 +144,7 @@ const AddCar = () => {
               </p>
             </div>
 
-            {/* Provider Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Provider Name */}
               <div className="form-control">
                 <label className="label font-medium">Provider Name</label>
                 <input
@@ -166,7 +155,6 @@ const AddCar = () => {
                 />
               </div>
 
-              {/* Provider Email */}
               <div className="form-control">
                 <label className="label font-medium">Provider Email</label>
                 <input
@@ -178,7 +166,6 @@ const AddCar = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
             <button
               disabled={loading}
               className="

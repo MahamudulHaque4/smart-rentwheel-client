@@ -177,8 +177,6 @@ const AboutUs = () => {
   );
 };
 
-/* Small reusable components */
-
 const FeatureCard = ({ icon, title, text }) => (
   <div className="p-5 rounded-2xl bg-base-100 border border-base-200 shadow-sm hover:shadow-md transition">
     <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary grid place-items-center mb-3">

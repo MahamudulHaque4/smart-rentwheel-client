@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Navbar = () => {
-  const { user, signOutUser } = useContext(AuthContext); // ✅ correct
+  const { user, signOutUser } = useContext(AuthContext);
 
   const links = (
     <>

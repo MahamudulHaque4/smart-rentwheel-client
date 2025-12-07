@@ -50,16 +50,13 @@ const HeroSlider = () => {
         {slides.map((s, idx) => (
           <SwiperSlide key={idx}>
             <div className="relative h-[320px] md:h-[520px] w-full">
-              {/* background image */}
               <img
                 src={s.image}
                 alt={s.title}
                 className="absolute inset-0 w-full h-full object-cover"
               />
-              {/* overlay */}
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
 
-              {/* content */}
               <div className="relative z-10 h-full flex items-center">
                 <div className="max-w-6xl mx-auto px-6 md:px-10">
                   <div className="max-w-xl space-y-4 text-white">

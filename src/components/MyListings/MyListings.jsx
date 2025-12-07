@@ -1,4 +1,3 @@
-// src/components/MyListings/MyListings.jsx
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import toast from "react-hot-toast";

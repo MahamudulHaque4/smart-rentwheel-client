@@ -12,13 +12,11 @@ const Achievement = () => {
     <div className="bg-base-100 py-16 px-6">
       <div className="max-w-6xl mx-auto text-center">
 
-        {/* Heading */}
         <h2 className="text-4xl font-extrabold">Our Achievements & Stats</h2>
         <p className="text-base-content/70 mt-2">
           Numbers that reflect our dedication and service excellence  
         </p>
 
-        {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-10">
           {stats.map((item, index) => (
             <div

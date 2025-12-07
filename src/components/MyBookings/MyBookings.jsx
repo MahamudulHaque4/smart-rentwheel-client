@@ -3,7 +3,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Lottie from "lottie-react";
-import bookingSuccessAnimation from "../../assets/booking_success.json"; // 👈 adjust path if needed
+import bookingSuccessAnimation from "../../assets/booking_success.json";
 
 const MyBookings = () => {
   const { user } = useContext(AuthContext);
@@ -13,30 +13,26 @@ const MyBookings = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // ⭐ Was this page opened right after a booking?
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(
     location.state?.fromBooking === true
   );
 
-  // Remove state from history so refresh doesn't re-trigger animation
   useEffect(() => {
     if (location.state?.fromBooking) {
       navigate(location.pathname, { replace: true });
     }
   }, [location, navigate]);
 
-  // Auto-hide animation after few seconds
   useEffect(() => {
     if (!showSuccessAnimation) return;
 
     const timer = setTimeout(() => {
       setShowSuccessAnimation(false);
-    }, 3500); // 3.5 seconds
+    }, 3500); 
 
     return () => clearTimeout(timer);
   }, [showSuccessAnimation]);
 
-  // 🔁 Fetch all bookings for logged-in user
   useEffect(() => {
     if (!user?.email) return;
 
@@ -55,7 +51,6 @@ const MyBookings = () => {
       .finally(() => setLoading(false));
   }, [user]);
 
-  // ❌ Cancel / delete a booking
   const handleCancelBooking = (bookingId) => {
     const ok = window.confirm("Are you sure you want to cancel this booking?");
     if (!ok) return;
@@ -82,7 +77,6 @@ const MyBookings = () => {
   };
 
   if (!user) {
-    // Shouldn't happen because this route is private
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-base-content/60">
@@ -103,7 +97,6 @@ const MyBookings = () => {
   return (
     <div className="min-h-screen bg-base-200 py-10 px-4">
       <div className="max-w-5xl mx-auto bg-base-100 rounded-3xl shadow-xl border border-base-200 p-6 md:p-8 relative">
-        {/* ✅ Lottie success banner */}
         {showSuccessAnimation && (
           <div className="absolute inset-0 bg-base-200/80 backdrop-blur-sm flex flex-col items-center justify-center z-20">
             <div className="bg-base-100 rounded-3xl shadow-lg p-6 md:p-8 flex flex-col items-center max-w-sm w-full border border-base-200">

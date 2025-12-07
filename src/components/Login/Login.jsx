@@ -26,10 +26,9 @@ const Login = () => {
         const u = result.user;
         console.log("GOOGLE USER:", u);
 
-        // 🔥 Save to localStorage – use ONE consistent key
         localStorage.setItem("username", u.displayName || "");
         localStorage.setItem("email", u.email || "");
-        localStorage.setItem("photoURL", u.photoURL || ""); // 👈 consistent
+        localStorage.setItem("photoURL", u.photoURL || ""); 
 
         toast.success("Login successful, welcome back!");
         navigate("/profile", { replace: true });
@@ -103,9 +102,7 @@ const Login = () => {
   return (
     <div className="min-h-screen grid place-items-center bg-gradient-to-br from-base-200 via-base-100 to-base-200 px-4">
       <div className="w-full max-w-md">
-        {/* Card */}
         <div className="bg-base-100/90 backdrop-blur rounded-3xl shadow-xl border border-base-200 p-8 md:p-10 transition-all duration-300 hover:shadow-2xl">
-          {/* Header */}
           <div className="text-center space-y-2 mb-7">
             <h2 className="text-3xl font-extrabold tracking-tight">
               Welcome Back 
@@ -115,9 +112,7 @@ const Login = () => {
             </p>
           </div>
 
-          {/* Form */}
           <form className="space-y-4" onSubmit={handleSubmit}>
-            {/* Email */}
             <div className="form-control">
               <label className="label pb-1">
                 <span className="label-text font-medium">Email</span>
@@ -136,7 +131,6 @@ const Login = () => {
               />
             </div>
 
-            {/* Password */}
             <div className="form-control">
               <label className="label pb-1">
                 <span className="label-text font-medium">Password</span>
@@ -165,7 +159,6 @@ const Login = () => {
               </p>
             </div>
 
-            {/* Login Button */}
             <button
               type="submit"
               className="
@@ -179,7 +172,6 @@ const Login = () => {
             </button>
           </form>
 
-          {/* Divider */}
           <div className="flex items-center gap-3 my-6">
             <div className="flex-1 h-px bg-base-300" />
             <span className="text-xs text-base-content/60 uppercase tracking-widest">
@@ -188,7 +180,6 @@ const Login = () => {
             <div className="flex-1 h-px bg-base-300" />
           </div>
 
-          {/* Google Login */}
           <button
             onClick={handleGoogleSignIn}
             className="

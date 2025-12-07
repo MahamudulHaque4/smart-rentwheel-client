@@ -7,7 +7,6 @@ const UpdateCar = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // 👉 car data from loader
   const car = useLoaderData();
 
   const [formData, setFormData] = useState({
@@ -22,7 +21,6 @@ const UpdateCar = () => {
     providerEmail: "",
   });
 
-  // pre-fill form when car loads
   useEffect(() => {
     if (car) {
       setFormData({
@@ -54,7 +52,6 @@ const UpdateCar = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // depending on your backend structure: modifiedCount / acknowledged etc.
         if (data.modifiedCount > 0 || data.acknowledged) {
           toast.success("Car updated successfully!");
           navigate("/myListing");
@@ -145,7 +142,6 @@ const UpdateCar = () => {
             </select>
           </div>
 
-          {/* Image URL (optional re-upload via URL) */}
           <div>
             <label className="block text-sm mb-1 font-medium">
               Image URL (optional)

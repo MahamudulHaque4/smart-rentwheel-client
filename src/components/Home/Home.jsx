@@ -1,5 +1,5 @@
-// src/components/Home/Home.jsx
 import React from "react";
+import { motion } from "framer-motion";
 import TopRatedCars from "../TopRatedCars/TopRatedCars";
 import HeroSlider from "../HeroSlider/HeroSlider";
 import Header from "../Header/Header";
@@ -11,22 +11,69 @@ const topratedCarsPromise = fetch("http://localhost:4000/top-cars").then(
   (res) => res.json()
 );
 
+const fadeUp = (delay = 0) => ({
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay },
+  },
+});
+
 const Home = () => {
   return (
     <div>
-      {/* 🔍 Header now only handles navigation to /cars?search=... */}
-      <Header />
+      <motion.div
+        variants={fadeUp(0)}
+        initial="hidden"
+        animate="visible"
+      >
+        <Header />
+      </motion.div>
 
-      <HeroSlider />
+      <motion.div
+        variants={fadeUp(0.15)}
+        initial="hidden"
+        animate="visible"
+      >
+        <HeroSlider />
+      </motion.div>
 
-      {/* Top rated cars section */}
-      <div className="my-20">
+      <motion.div
+        variants={fadeUp(0.25)}
+        initial="hidden"
+        animate="visible"
+        className="my-20"
+      >
         <TopRatedCars topratedCarsPromise={topratedCarsPromise} />
-      </div>
+      </motion.div>
 
-      <Testimonial />
-      <Whyrent />
-      <Achievement />
+      <motion.div
+        variants={fadeUp(0.2)}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <Testimonial />
+      </motion.div>
+
+      <motion.div
+        variants={fadeUp(0.2)}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <Whyrent />
+      </motion.div>
+
+      <motion.div
+        variants={fadeUp(0.2)}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <Achievement />
+      </motion.div>
     </div>
   );
 };

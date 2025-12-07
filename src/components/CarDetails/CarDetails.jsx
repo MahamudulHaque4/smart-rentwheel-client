@@ -11,7 +11,6 @@ import {
 import { AuthContext } from "../../contexts/AuthContext";
 import toast from "react-hot-toast";
 
-// ⭐ Lottie imports
 import Lottie from "lottie-react";
 import bookingSuccessAnimation from "../../assets/booking_success.json";
 
@@ -34,10 +33,8 @@ const CarDetails = () => {
     providerEmail,
   } = car || {};
 
-  // 🔥 keep live status in state so UI updates after booking
   const [currentStatus, setCurrentStatus] = useState(status || "Available");
 
-  // 🔥 control Lottie success overlay
   const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
@@ -74,7 +71,6 @@ const CarDetails = () => {
     };
 
     try {
-      // 1️⃣ Save booking
       const res = await fetch("http://localhost:4000/bookings", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -88,7 +84,6 @@ const CarDetails = () => {
         throw new Error(data?.error || "Booking failed");
       }
 
-      // 2️⃣ Update car status in DB
       const statusRes = await fetch(`http://localhost:4000/cars/${carId}`, {
         method: "PATCH",
         headers: { "content-type": "application/json" },
@@ -102,11 +97,10 @@ const CarDetails = () => {
         throw new Error(statusData?.error || "Failed to update car status");
       }
 
-      // 3️⃣ Update UI + show success animation
       setCurrentStatus("Booked");
       bookModalRef.current?.close();
       toast.success("Booking confirmed! Car is now booked.");
-      setShowSuccess(true); // 🔥 show Lottie overlay
+      setShowSuccess(true); 
     } catch (err) {
       console.error(err);
       toast.error(err.message || "Failed to create booking");
@@ -212,7 +206,6 @@ const CarDetails = () => {
           </div>
         </div>
 
-        {/* RIGHT */}
         <div className="lg:col-span-2 space-y-6">
           <div className="card bg-base-100 shadow-xl rounded-3xl border border-base-200">
             <div className="p-6 md:p-7 space-y-4">
@@ -259,7 +252,6 @@ const CarDetails = () => {
                 {isAvailable ? "Book Now" : "Already Booked"}
               </button>
 
-              {/* MODAL */}
               <dialog
                 ref={bookModalRef}
                 className="modal modal-bottom sm:modal-middle"
@@ -276,7 +268,6 @@ const CarDetails = () => {
 
                   <div className="p-6 md:p-7">
                     <form onSubmit={handlebookSubmit} className="space-y-4">
-                      {/* Name */}
                       <div className="form-control">
                         <label className="label pb-1">
                           <span className="label-text font-medium">Name</span>
@@ -290,7 +281,6 @@ const CarDetails = () => {
                         />
                       </div>
 
-                      {/* Email */}
                       <div className="form-control">
                         <label className="label pb-1">
                           <span className="label-text font-medium">Email</span>
@@ -304,7 +294,6 @@ const CarDetails = () => {
                         />
                       </div>
 
-                      {/* Car */}
                       <div className="form-control">
                         <label className="label pb-1">
                           <span className="label-text font-medium">Car</span>
@@ -318,7 +307,6 @@ const CarDetails = () => {
                         />
                       </div>
 
-                      {/* Price */}
                       <div className="form-control">
                         <label className="label pb-1">
                           <span className="label-text font-medium">Price</span>
@@ -332,7 +320,6 @@ const CarDetails = () => {
                         />
                       </div>
 
-                      {/* Booking Date */}
                       <div className="form-control">
                         <label className="label pb-1">
                           <span className="label-text font-medium">
@@ -383,7 +370,6 @@ const CarDetails = () => {
         </div>
       </div>
 
-      {/* ⭐ LOTTIE SUCCESS OVERLAY */}
       {showSuccess && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
           <div className="bg-base-100 rounded-3xl p-6 md:p-8 shadow-2xl max-w-sm w-full text-center space-y-4">
@@ -392,7 +378,6 @@ const CarDetails = () => {
                 animationData={bookingSuccessAnimation}
                 loop={false}
                 onComplete={() => {
-                  // hide automatically after animation ends (optional)
                   setShowSuccess(false);
                 }}
               />

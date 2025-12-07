@@ -4,7 +4,6 @@ import { Link } from "react-router";
 const Footer = () => {
   return (
     <footer className="relative mt-16">
-      {/* Soft wave top */}
       <div className="absolute -top-10 left-0 w-full overflow-hidden leading-none">
         <svg
           className="relative block w-[calc(150%+1.3px)] h-10 text-base-200"
@@ -18,12 +17,10 @@ const Footer = () => {
         </svg>
       </div>
 
-      {/* Footer body */}
       <div className="bg-base-200 text-base-content">
         <div className="max-w-6xl mx-auto px-6 pt-12 pb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
 
-            {/* Brand / short text */}
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2">
                 <div className="w-9 h-9 rounded-2xl bg-primary/15 grid place-items-center font-bold text-primary">
@@ -38,7 +35,6 @@ const Footer = () => {
                 Reliable cars for every trip. Book in minutes, drive with confidence.
               </p>
 
-              {/* Trust chips */}
               <div className="flex flex-wrap gap-2 pt-1">
                 <span className="badge badge-outline text-xs">24/7 Support</span>
                 <span className="badge badge-outline text-xs">Verified Cars</span>
@@ -46,7 +42,6 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Links */}
             <nav className="space-y-3 md:justify-self-center">
               <h3 className="text-xs font-semibold uppercase tracking-widest text-base-content/60">
                 Company
@@ -60,21 +55,17 @@ const Footer = () => {
               </div>
             </nav>
 
-            {/* Social + quick actions */}
             <div className="space-y-3 md:justify-self-end">
               <h3 className="text-xs font-semibold uppercase tracking-widest text-base-content/60">
                 Follow & Explore
               </h3>
 
-              {/* Quick actions */}
               <div className="flex flex-col sm:flex-row gap-2">
                 <Link to='/cars' className="btn btn-primary  btn-sm rounded-full px-5">Browse Cars</Link>
                 <Link to='/login' className="btn btn-outline btn-sm rounded-full px-5">Become Provider</Link>
               </div>
 
-              {/* Social icons */}
               <div className="flex gap-2 pt-1">
-                {/* Twitter */}
                 <a
                   href="https://twitter.com"
                   aria-label="Twitter"
@@ -84,8 +75,6 @@ const Footer = () => {
                     <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
                   </svg>
                 </a>
-
-                {/* YouTube */}
                 <a
                   href="https://www.youtube.com"
                   aria-label="YouTube"
@@ -95,8 +84,6 @@ const Footer = () => {
                     <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
                   </svg>
                 </a>
-
-                {/* Facebook */}
                 <a
                   href="https://www.facebook.com"
                   aria-label="Facebook"
@@ -110,7 +97,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Bottom bar */}
+
           <div className="mt-8 pt-4 border-t border-base-300 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-base-content/60">
             <p>© {new Date().getFullYear()} Mahamudul Haque. All rights reserved.</p>
             <p className="italic">Drive smart. Travel easy.</p>
