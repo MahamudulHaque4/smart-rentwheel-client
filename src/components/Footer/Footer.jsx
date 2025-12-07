@@ -27,7 +27,7 @@ const Footer = () => {
                   <img src="https://img.icons8.com/?size=100&id=10697&format=png" alt="" />
                 </div>
                 <h2 className="text-xl font-bold tracking-tight">
-                  Rent <span className='text-purple-600'>Wheel</span>
+                  Rent <span className='text-primary'>Wheel</span>
                 </h2>
               </div>
 

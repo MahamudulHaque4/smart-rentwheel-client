@@ -1,9 +1,13 @@
+// src/components/Navbar/Navbar.jsx
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
+import { useTheme } from "../../hooks/useTheme";
+import { Moon, Sun } from "lucide-react";
 
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
+  const { theme, toggleTheme } = useTheme();
 
   const links = (
     <>
@@ -61,7 +65,7 @@ const Navbar = () => {
           </ul>
         </div>
         <NavLink to="/" className="btn-ghost text-3xl">
-          Rent <span className="text-purple-600">Wheel</span>
+          Rent <span className="text-primary">Wheel</span>
         </NavLink>
       </div>
 
@@ -69,7 +73,20 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
 
-      <div className="gap-4 navbar-end">
+      <div className="gap-4 navbar-end flex items-center">
+    
+        <button
+          onClick={toggleTheme}
+          className="btn btn-ghost btn-circle"
+          aria-label="Toggle theme"
+        >
+          {theme === "light" ? (
+            <Moon className="w-5 h-5" />
+          ) : (
+            <Sun className="w-5 h-5" />
+          )}
+        </button>
+
         {user ? (
           <div className="flex items-center gap-3">
             <NavLink
@@ -81,7 +98,7 @@ const Navbar = () => {
                 alt={user.displayName || "User"}
                 className="rounded-full w-[40px] h-[40px] mx-auto"
               />
-              <h2 className="text-xl font-bold">{user?.displayName}</h2>
+              <h2 className="text-xl font-semibold">{user?.displayName}</h2>
             </NavLink>
           </div>
         ) : (
