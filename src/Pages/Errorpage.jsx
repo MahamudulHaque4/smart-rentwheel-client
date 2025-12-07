@@ -14,6 +14,7 @@ const Errorpage = () => {
 
   return (
     <div className="min-h-screen grid place-items-center bg-base-200 px-4">
+      
       <div className="text-center max-w-lg">
         {/* floating number */}
         <div className="relative inline-block">

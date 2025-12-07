@@ -66,7 +66,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'carDetails/:id', // full URL = /carDetails/:id
+        path: 'carDetails/:id',
         loader: async ({ params }) => {
           try {
             console.log(' Loading car with ID:', params.id);

@@ -11,6 +11,10 @@ import {
 import { AuthContext } from "../../contexts/AuthContext";
 import toast from "react-hot-toast";
 
+// ⭐ Lottie imports
+import Lottie from "lottie-react";
+import bookingSuccessAnimation from "../../assets/booking_success.json";
+
 const CarDetails = () => {
   const car = useLoaderData();
   const navigate = useNavigate();
@@ -32,6 +36,9 @@ const CarDetails = () => {
 
   // 🔥 keep live status in state so UI updates after booking
   const [currentStatus, setCurrentStatus] = useState(status || "Available");
+
+  // 🔥 control Lottie success overlay
+  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     if (car?.status) {
@@ -81,15 +88,12 @@ const CarDetails = () => {
         throw new Error(data?.error || "Booking failed");
       }
 
-      // 2️⃣ Update car status in DB to "Booked"
-      const statusRes = await fetch(
-        `http://localhost:4000/cars/${carId}`,
-        {
-          method: "PATCH",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ status: "Booked" }),
-        }
-      );
+      // 2️⃣ Update car status in DB
+      const statusRes = await fetch(`http://localhost:4000/cars/${carId}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ status: "Booked" }),
+      });
 
       const statusData = await statusRes.json();
       console.log("Car status update:", statusData);
@@ -98,15 +102,11 @@ const CarDetails = () => {
         throw new Error(statusData?.error || "Failed to update car status");
       }
 
-      // 3️⃣ Update UI state
+      // 3️⃣ Update UI + show success animation
       setCurrentStatus("Booked");
-
-      // 4️⃣ Close modal + toast + stay on same page
       bookModalRef.current?.close();
       toast.success("Booking confirmed! Car is now booked.");
-
-      // Optional: ensure URL is still this page (not really needed, but harmless)
-      navigate(`/carDetails/${carId}`, { replace: true });
+      setShowSuccess(true); // 🔥 show Lottie overlay
     } catch (err) {
       console.error(err);
       toast.error(err.message || "Failed to create booking");
@@ -382,6 +382,38 @@ const CarDetails = () => {
           </div>
         </div>
       </div>
+
+      {/* ⭐ LOTTIE SUCCESS OVERLAY */}
+      {showSuccess && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
+          <div className="bg-base-100 rounded-3xl p-6 md:p-8 shadow-2xl max-w-sm w-full text-center space-y-4">
+            <div className="w-40 h-40 mx-auto">
+              <Lottie
+                animationData={bookingSuccessAnimation}
+                loop={false}
+                onComplete={() => {
+                  // hide automatically after animation ends (optional)
+                  setShowSuccess(false);
+                }}
+              />
+            </div>
+            <h3 className="text-xl font-bold">Booking Successful!</h3>
+            <p className="text-sm text-base-content/70">
+              Your car has been booked. You can view details in{" "}
+              <b>My Bookings</b>.
+            </p>
+            <button
+              className="btn btn-primary rounded-full w-full"
+              onClick={() => {
+                setShowSuccess(false);
+                navigate("/myBooking");
+              }}
+            >
+              Go to My Bookings
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

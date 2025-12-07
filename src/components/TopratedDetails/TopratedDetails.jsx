@@ -31,9 +31,12 @@ const TopratedDetails = ({ topCars }) => {
         <div className="space-y-1 text-sm text-base-content/80">
           <p>
             Rent Price (per day):{" "}
-            <span className="font-semibold text-base-content">
-              {rentPrice} BDT
-            </span>
+            <div className="tooltip" data-tip={`${topCars.rentPrice} BDT/day`}>
+  <p className="text-primary font-bold">
+    {topCars.rentPrice} BDT/day
+  </p>
+</div>
+
           </p>
           <p>
             Provider:{" "}

@@ -1,5 +1,6 @@
 // src/components/Header/Header.jsx
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Search,
   Sparkles,
@@ -8,30 +9,26 @@ import {
   Headset,
 } from "lucide-react";
 
-const Header = ({ onSearch }) => {
+const Header = () => {
   const [searchText, setSearchText] = useState("");
-
-  // avoid crash if onSearch not passed
-  const safeOnSearch = (value) => {
-    if (typeof onSearch === "function") {
-      onSearch(value);
-    }
-  };
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const value = e.target.value;
     setSearchText(value);
-    safeOnSearch(value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    safeOnSearch(searchText);
+    const query = searchText.trim();
+    if (!query) return;
+    // 🔥 Go to /cars with search query in URL
+    navigate(`/cars?search=${encodeURIComponent(query)}`);
   };
 
   const quickSearch = (text) => {
     setSearchText(text);
-    safeOnSearch(text);
+    navigate(`/cars?search=${encodeURIComponent(text)}`);
   };
 
   return (
