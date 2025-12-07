@@ -8,11 +8,9 @@ const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 👉 for pretty cancel-confirm modal
   const [bookingToCancel, setBookingToCancel] = useState(null);
   const cancelModalRef = useRef(null);
 
-  // 🔁 Fetch all bookings for logged-in user
   useEffect(() => {
     if (!user?.email) return;
 
@@ -31,7 +29,6 @@ const MyBookings = () => {
       .finally(() => setLoading(false));
   }, [user]);
 
-  // open modal instead of window.confirm
   const openCancelModal = (booking) => {
     setBookingToCancel(booking);
     cancelModalRef.current?.showModal();
@@ -42,7 +39,6 @@ const MyBookings = () => {
     setBookingToCancel(null);
   };
 
-  // ✅ do actual delete on confirm
   const handleConfirmCancel = () => {
     if (!bookingToCancel?._id) return;
 
@@ -53,7 +49,6 @@ const MyBookings = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // adjust this condition based on your backend response shape
         if ((data.success && data.deletedCount > 0) || data.deletedCount > 0) {
           toast.success("Booking cancelled successfully");
 
@@ -73,7 +68,6 @@ const MyBookings = () => {
   };
 
   if (!user) {
-    // Shouldn't happen because this route is private
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-base-content/60">
@@ -178,7 +172,6 @@ const MyBookings = () => {
               </table>
             </div>
 
-            {/* 🧾 Cancel confirmation modal */}
             <dialog
               ref={cancelModalRef}
               className="modal modal-bottom sm:modal-middle"
