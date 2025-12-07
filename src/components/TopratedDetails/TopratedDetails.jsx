@@ -32,10 +32,10 @@ const TopratedDetails = ({ topCars }) => {
           <p>
             Rent Price (per day):{" "}
             <div className="tooltip" data-tip={`${topCars.rentPrice} BDT/day`}>
-  <p className="text-primary font-bold">
-    {topCars.rentPrice} BDT/day
-  </p>
-</div>
+               <p className="text-black font-bold">
+                  {topCars.rentPrice} BDT/day
+              </p>
+           </div>
 
           </p>
           <p>
@@ -51,7 +51,7 @@ const TopratedDetails = ({ topCars }) => {
           <NavLink
             to={`/carDetails/${_id}`}
             className="
-          btn btn-primary btn-sm rounded-full px-5
+          btn btn-outline btn-sm rounded-full px-5
           transition-all duration-300
           hover:scale-105 hover:brightness-110 hover:shadow-lg
           active:scale-95
