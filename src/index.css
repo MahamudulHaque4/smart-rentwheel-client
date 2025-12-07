@@ -8,3 +8,13 @@
   --color-primary: blue;
   --color-secondary: teal;
 }
+
+.cursor-hover {
+  transform: scale(1.6) translate(-12px, -12px) !important;
+  background: rgba(124, 58, 237, 0.15); /* optional glow */
+}
+
+.cursor-click {
+  transform: scale(0.6) translate(-12px, -12px) !important;
+  background: rgba(124, 58, 237, 0.4);
+}
