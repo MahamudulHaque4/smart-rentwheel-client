@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAeFWTtLN1zVHfLrhfLTluwtFSvgzPmQUU",
-  authDomain: "smart-rentwheel.firebaseapp.com",
-  projectId: "smart-rentwheel",
-  storageBucket: "smart-rentwheel.firebasestorage.app",
-  messagingSenderId: "794502878696",
-  appId: "1:794502878696:web:0649bf4c218640d339405d"
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env. VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId,
 };
 
 const app = initializeApp(firebaseConfig);

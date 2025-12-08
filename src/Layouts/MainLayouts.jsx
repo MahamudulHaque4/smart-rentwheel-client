@@ -80,7 +80,7 @@ const MainLayouts = () => {
   }, []);
 
   return (
-    <div className="mx-auto flex flex-col min-h-screen relative">
+    <div className="max-w-7xl mx-auto flex flex-col min-h-screen relative">
       <div
         id="customCursor"
         className="
